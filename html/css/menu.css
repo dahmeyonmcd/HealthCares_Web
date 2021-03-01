@@ -22,8 +22,8 @@ Main components
 .cd-nav-trigger {
   top: 15px;
   right: 20px;
-  height: 44px;
-  width: 44px;
+  height: 40px;
+  width: 40px;
   z-index: 5;
   /* image replacement */
   overflow: hidden;

@@ -59,19 +59,17 @@
 					<a href="index.html" id="logo"><img src="img/logo.png" alt="" width="99" height="22"></a>
 					<div id="social">
 						<ul>
-							<li><a href="#0"><i class="icon-facebook"></i></a></li>
-							<li><a href="#0"><i class="icon-twitter"></i></a></li>
-							<li><a href="#0"><i class="icon-google"></i></a></li>
-							<li><a href="#0"><i class="icon-linkedin"></i></a></li>
 						</ul>
 					</div>
 					<!-- /social -->
 					<div>
-						<figure><img src="img/info_graphic_1.svg" alt="" class="img-fluid"></figure>
+						<figure><img src="img/info_graphic_2.svg" alt="" class="img-fluid"></figure>
 						<h2>COVID-19 Questionnaire</h2>
-						<p>Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel. Adhuc invidunt duo ex. Eu tantas dolorum ullamcorper qui.</p>
+						<p>This COVID-19 Questionnaire needs to be completed daily for both employees and visitors of EmployReward Solutions and Synergi. Complete the questionnaire below.</p>
 						<a href="#0" class="btn_1 rounded">Already have an account</a>
-						<a href="#start" class="btn_1 rounded mobile_btn">Start Now!</a>
+						<a href="#start" class="btn_1 rounded mobile_btn">Already have an account</a>
+						<a href="#0" class="btn_1 rounded">Continue as guest</a>
+						<a href="#start" class="btn_1 rounded mobile_btn">Continue as guest</a>
 					</div>
 					<div class="copy">© 2021 EmployReward Solutions</div>
 				</div>
@@ -143,13 +141,13 @@
 									<h3 class="main_question"><strong>2/6</strong>Have you had any of the following symptoms in the past 24 hours?</h3>
 									<div class="form-group">
 										<label class="container_radio version_2">Cough
-											<input type="radio" name="question_1" value="Cough" class="required" onchange="getVals(this, 'question_1');">
+											<input type="checkbox" name="question_1[]" value="Cough" class="required" onchange="getVals(this, 'question_1');">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_radio version_2">Fever
-											<input type="radio" name="question_1" value="Fever" class="required" onchange="getVals(this, 'question_1');">
+											<input type="checkbox" name="question_1[]" value="Fever" class="required" onchange="getVals(this, 'question_1');">
 											<span class="checkmark"></span>
 										</label>
 									</div>
@@ -211,13 +209,13 @@
 									</div>
 									<div class="form-group">
 										<label class="container_radio version_2">Been in close contact with someone who had COVID-19 symptoms?
-											<input type="radio" name="question_3[]" value="Been in close contact with someone who had COVID-19 symptoms?" class="required" onchange="getVals(this, 'question_3');">
+											<input type="checkbox" name="question_3[]" value="Been in close contact with someone who had COVID-19 symptoms?" class="required" onchange="getVals(this, 'question_3');">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_radio version_2">Traveled internationally or taken a cruise
-											<input type="radio" name="question_3[]" value="Traveled internationally or taken a cruise" class="required" onchange="getVals(this, 'question_3');">
+											<input type="checkbox" name="question_3[]" value="Traveled internationally or taken a cruise" class="required" onchange="getVals(this, 'question_3');">
 											<span class="checkmark"></span>
 										</label>
 									</div>
@@ -244,7 +242,7 @@
 												<p id="question_2"></p>
 											</li>
 											<li><strong>3</strong>
-												<h5>DIn the last 14 days have you:</h5>
+												<h5>In the last 14 days have you:</h5>
 												<p id="question_3"></p>
 											</li>
 											<li><strong>3</strong>
@@ -283,7 +281,7 @@
 	</div>
 	<!-- /cd-overlay-content -->
 
-	<a href="#0" class="cd-nav-trigger">Menu<span class="cd-icon"></span></a>
+	
 	<!-- /menu button -->
 	
 	<!-- Modal terms -->

@@ -1511,7 +1511,7 @@ span.error:after {
 
 .radio_input .container_radio {
   display: inline-block;
-  margin: 12px 0 0 12px;
+  margin: 0px 0px 0px 0px;
 }
 
 /* Fileupload */

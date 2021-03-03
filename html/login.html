@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="HealthCares, Login">
+    <meta name="author" content="Dahmeyon McDonald">
+    <meta property="og:title" content="HealthCares | Login">
+    <meta property="og:image" content="https://ershealthcares.000webhostapp.com/img/ogimage.png">
+    <title>HealthCares | Login</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/menu.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="css/vendors.css" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+	
+	<!-- MODERNIZR MENU -->
+	<script src="js/modernizr.js"></script>
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+
+</head>
+
+<body>
+	
+	<div id="preloader">
+		<div data-loader="circle-side"></div>
+	</div><!-- /Preload -->
+	
+	<div id="loader_form">
+		<div data-loader="circle-side-2"></div>
+	</div><!-- /loader_form -->
+	
+	<nav>
+		<ul class="cd-primary-nav">
+		</ul>
+	</nav>
+	<!-- /menu -->
+	
+	<div class="container-fluid full-height">
+		<div class="row row-height">
+			<div class="col-lg-6 content-left">
+				<div class="content-left-wrapper">
+					<a href="index.html" id="logo"><img src="img/logo.png" alt="" width="139" height="27"></a>
+					<div id="social">
+						<ul>
+						</ul>
+					</div>
+					<!-- /social -->
+					<div>
+						<figure><img src="img/info_graphic_2.svg" alt="" class="img-fluid"></figure>
+						<h2>HealthCares Login</h2>
+						<p>Sign into your HealthCares account to complete the COVID-19 questionnaire.</p>
+						<a href="#0" class="btn_1 rounded">Continue as guest</a>
+						<a href="#start" class="btn_1 rounded mobile_btn">Continue as guest</a>
+					</div>
+					<div class="copy">© 2021 EmployReward Solutions</div>
+				</div>
+				<!-- /content-left-wrapper -->
+			</div>
+			<!-- /content-left -->
+
+			<div class="col-lg-6 content-right" id="start">
+				<div id="wizard_container">
+					<div id="top-wizard">
+						</div>
+						<!-- /top-wizard -->
+						<form id="wrapped" method="POST">
+							<input id="website" name="website" type="text" value="">
+							<!-- Leave for security protection, read docs for details -->
+							<div id="middle-wizard">
+								<div class="step">
+									<h3 class="main_question">Please enter your login credentials below</h3>
+									<div class="form-group">
+										<input type="text" name="email" id= "emailField" class="form-control required" placeholder="Email Address">
+									</div>
+									<div class="form-group">
+										<input type="text" name="nameField" id= "nameField" class="form-control required" placeholder="Name">
+									</div>
+									<div class="form-group">
+										<input type="text" name="mobileField" id= "mobileField" class="form-control required" placeholder="Mobile">
+									</div>
+									<div class="form-group">
+										<input type="password" name="passwordField" id="passwordField" class="form-control required" placeholder="Password">
+									</div>
+									<div class="form-group">
+										<input type="password" name="confirmPasswordField" id="confirmPasswordField" class="form-control required" placeholder="Confirm Password">
+									</div>
+									<div class="form-group">
+										<input type="text" name="accessCodeField" id= "accessCodeField" class="form-control required" placeholder="Access Code">
+									</div>
+									<div class="form-group terms">
+										<label class="container_check">Remember me
+											<input type="checkbox" name="remember" value="Yes" class="required">
+											<span class="checkmark"></span>
+										</label>
+									</div>
+								</div>
+								<!-- /step-->
+								<div id="bottom-wizard">
+								<button type="button" name="signin_button" id="signin_button" class="signin_button">Sign In</button>
+								<button type="button" name="signout_button" id="signout_button" class="signin_button hide">Logout</button>
+							</div>
+							</div>
+							<!-- /middle-wizard -->
+							<!-- /bottom-wizard -->
+						</form>
+						
+					</div>
+					<!-- /Wizard container -->
+			</div>
+			<!-- /content-right-->
+		</div>
+		<!-- /row-->
+	</div>
+	<!-- /container-fluid -->
+
+	<div class="cd-overlay-nav">
+		<span></span>
+	</div>
+	<!-- /cd-overlay-nav -->
+
+	<div class="cd-overlay-content">
+		<span></span>
+	</div>
+	<!-- /cd-overlay-content -->
+
+	
+	<!-- /menu button -->
+	<!-- /.modal -->
+	
+	<!-- COMMON SCRIPTS -->
+	<script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/common_scripts.min.js"></script>
+	<script src="js/velocity.min.js"></script>
+	<script src="js/functions.js"></script>
+
+	<!-- Wizard script -->
+	<script src="js/survey_func.js"></script>
+	<script src="js/app.js"></script>
+
+</body>
+</html>

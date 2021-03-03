@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="HealthCares, COVID-19 Questionnaire.">
     <meta name="author" content="Dahmeyon McDonald">
+    <meta property="og:title" content="HealthCares | COVD-19 Questionnaire">
+    <meta property="og:image" content="https://ershealthcares.000webhostapp.com/img/ogimage.png">
+    <meta property="og:url" content="https://www.employrewards.com/healthcares">
     <title>HealthCares | COVD-19 Questionnaire</title>
 
     <!-- Favicons-->
@@ -31,6 +34,12 @@
 	<!-- MODERNIZR MENU -->
 	<script src="js/modernizr.js"></script>
 
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+
 </head>
 
 <body>
@@ -52,11 +61,11 @@
 	</nav>
 	<!-- /menu -->
 	
-	<div class="container-fluid full-height">
+	<div class="container-fluid full-height" id="start_2">
 		<div class="row row-height">
-			<div class="col-lg-6 content-left">
+			<div class="col-lg-6 content-left" id="left_side">
 				<div class="content-left-wrapper">
-					<a href="index.html" id="logo"><img src="img/logo.png" alt="" width="99" height="22"></a>
+					<a href="index.html" id="logo"><img src="img/logo.png" alt="" width="139" height="27"></a>
 					<div id="social">
 						<ul>
 						</ul>
@@ -66,17 +75,20 @@
 						<figure><img src="img/info_graphic_2.svg" alt="" class="img-fluid"></figure>
 						<h2>COVID-19 Questionnaire</h2>
 						<p>This COVID-19 Questionnaire needs to be completed daily for both employees and visitors of EmployReward Solutions and Synergi. Complete the questionnaire below.</p>
-						<a href="#0" class="btn_1 rounded">Already have an account</a>
-						<a href="#start" class="btn_1 rounded mobile_btn">Already have an account</a>
-						<a href="#0" class="btn_1 rounded">Continue as guest</a>
-						<a href="#start" class="btn_1 rounded mobile_btn">Continue as guest</a>
+						<h4 id="userLabel" class="main_question">Welcome back</h3>
+						<a id="alreadyHaveAccountButton" class="btn_1 rounded">Already have an account</a>
+
+						<a id="guestButton" class="btn_1 rounded">Continue as guest</a>
+
+						<a id="registerButton" class="btn_1 rounded">Register</a>
+
+						<a id="signout_MainButton" class="btn_1 rounded">Logout</a>
 					</div>
 					<div class="copy">© 2021 EmployReward Solutions</div>
 				</div>
 				<!-- /content-left-wrapper -->
 			</div>
 			<!-- /content-left -->
-
 			<div class="col-lg-6 content-right" id="start">
 				<div id="wizard_container">
 					<div id="top-wizard">
@@ -87,16 +99,19 @@
 							<input id="website" name="website" type="text" value="">
 							<!-- Leave for security protection, read docs for details -->
 							<div id="middle-wizard">
-								<div class="step">
-									<h3 class="main_question"><strong>1/6</strong>Please fill with your details</h3>
+								<div class="step" id="questionnaire">
+									<h3 id="mainSubHeader" class="main_question">Please fill with your details</h3>
 									<div class="form-group">
-										<input type="text" name="firstname" class="form-control required" placeholder="First Name">
+										<input type="text" name="firstname" id="firstnameField" class="form-control required" placeholder="First Name" onkeyup="getVals(this, 'firstname', 0);">
 									</div>
 									<div class="form-group">
-										<input type="text" name="lastname" class="form-control required" placeholder="Last Name">
+										<input type="text" name="lastname" id="lastnameField" class="form-control required" placeholder="Last Name" onkeyup="getVals(this, 'lastname', 0);">
 									</div>
 									<div class="form-group">
-										<input type="email" name="email" class="form-control required" placeholder="Your Email">
+										<input type="email" name="email" id="mainemailField" class="form-control required" placeholder="Your Email" onkeyup="getVals(this, 'email', 0);">
+									</div>
+									<div class="form-group">
+										<input type="mobile" name="mobile" id="mainmobileField" class="form-control required" placeholder="Mobile" onkeyup="getVals(this, 'mobile', 0);">
 									</div>
 									<div class="form-group">
 										<div class="styled-select clearfix">
@@ -107,20 +122,6 @@
 												<option value="Asia">Asia</option>
 												<option value="United Kingdon">United Kingdom</option>
 											</select>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-9">
-											<div class="form-group radio_input">
-												<label class="container_radio">Male
-													<input type="radio" name="gender" value="Male" class="required">
-													<span class="checkmark"></span>
-												</label>
-												<label class="container_radio">Female
-													<input type="radio" name="gender" value="Female" class="required">
-													<span class="checkmark"></span>
-												</label>
-											</div>
 										</div>
 									</div>
 									<!-- /row -->
@@ -136,13 +137,13 @@
 									<h3 class="main_question"><strong>2/6</strong>Have you had any of the following symptoms in the past 24 hours?</h3>
 									<div class="form-group">
 										<label class="container_check version_2">Cough
-											<input type="checkbox" name="question_1[]" value="Cough" class="required" onchange="getVals(this, 'question_1');">
+											<input type="checkbox" name="question_1[]" value="Cough" class="required" onchange="getVals(this, 'question_1', 0);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_check version_2">Fever
-											<input type="checkbox" name="question_1[]" value="Fever" class="required" onchange="getVals(this, 'question_1');">
+											<input type="checkbox" name="question_1[]" value="Fever" class="required" onchange="getVals(this, 'question_1', 1);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
@@ -152,43 +153,43 @@
 									<h3 class="main_question"><strong>3/6</strong>Or at least TWO of the following symptoms in the last 24 hours?</h3>
 									<div class="form-group">
 										<label class="container_check version_2">Fever (Usually 100.4 or higher)
-											<input type="checkbox" name="question_2[]" value="Fever (Usually 100.4 or higher)" class="required" onchange="getVals(this, 'question_2');">
+											<input type="checkbox" name="question_2[]" value="Fever (Usually 100.4 or higher)" class="required" onchange="getVals(this, 'question_2', 0);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_check version_2">Chills
-											<input type="checkbox" name="question_2[]" value="Chills" class="required" onchange="getVals(this, 'question_2');">
+											<input type="checkbox" name="question_2[]" value="Chills" class="required" onchange="getVals(this, 'question_2', 1);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_check version_2">Repeated Shaking with chills
-											<input type="checkbox" name="question_2[]" value="Repeated Shaking with chills" class="required" onchange="getVals(this, 'question_2');">
+											<input type="checkbox" name="question_2[]" value="Repeated Shaking with chills" class="required" onchange="getVals(this, 'question_2', 2);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_check version_2">Muscle pain
-											<input type="checkbox" name="question_2[]" value="Muscle pain" class="required" onchange="getVals(this, 'question_2');">
+											<input type="checkbox" name="question_2[]" value="Muscle pain" class="required" onchange="getVals(this, 'question_2', 3);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_check version_2">Headache
-											<input type="checkbox" name="question_2[]" value="Headache" class="required" onchange="getVals(this, 'question_2');">
+											<input type="checkbox" name="question_2[]" value="Headache" class="required" onchange="getVals(this, 'question_2', 4);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_check version_2">Sore throat
-											<input type="checkbox" name="question_2[]" value="Sore throat" class="required" onchange="getVals(this, 'question_2');">
+											<input type="checkbox" name="question_2[]" value="Sore throat" class="required" onchange="getVals(this, 'question_2', 5);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_check version_2">New loss of taste or smell
-											<input type="checkbox" name="question_2[]" value="New loss of taste or smell" class="required" onchange="getVals(this, 'question_2');">
+											<input type="checkbox" name="question_2[]" value="New loss of taste or smell" class="required" onchange="getVals(this, 'question_2', 6);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
@@ -198,19 +199,19 @@
 									<h3 class="main_question"><strong>4/6</strong>In the last 14 days have you:</h3>
 									<div class="form-group">
 										<label class="container_radio version_2">Been in contact with someone who was diagnosed with COVID-19?
-											<input type="radio" name="question_3[]" value="Been in contact with someone who was diagnosed with COVID-19?" class="required" onchange="getVals(this, 'question_3');">
+											<input type="radio" name="question_3[]" value="Been in contact with someone who was diagnosed with COVID-19?" class="required" onchange="getVals(this, 'question_3', 0);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_radio version_2">Been in close contact with someone who had COVID-19 symptoms?
-											<input type="checkbox" name="question_3[]" value="Been in close contact with someone who had COVID-19 symptoms?" class="required" onchange="getVals(this, 'question_3');">
+											<input type="checkbox" name="question_3[]" value="Been in close contact with someone who had COVID-19 symptoms?" class="required" onchange="getVals(this, 'question_3', 1);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
 										<label class="container_radio version_2">Traveled internationally or taken a cruise
-											<input type="checkbox" name="question_3[]" value="Traveled internationally or taken a cruise" class="required" onchange="getVals(this, 'question_3');">
+											<input type="checkbox" name="question_3[]" value="Traveled internationally or taken a cruise" class="required" onchange="getVals(this, 'question_3', 2);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
@@ -220,7 +221,7 @@
 									<h3 class="main_question"><strong>5/6</strong>Enter your temperature below</h3>
 									<div class="form-group">
 										<label>Temperature</label>
-										<textarea name="question_4" class="form-control" style="height:70;" placeholder="Type your temperature here (e.g. 98.8)" onkeyup="getVals(this, 'question_4');"></textarea>
+										<textarea name="question_4" id="temperatureTextArea" class="form-control" style="height:70;" placeholder="Type your temperature here (e.g. 98.8)" onkeyup="getVals(this, 'question_4', 0);"></textarea>
 									</div>
 								</div>
 								<!-- /step-->
@@ -240,7 +241,7 @@
 												<h5>In the last 14 days have you:</h5>
 												<p id="question_3"></p>
 											</li>
-											<li><strong>3</strong>
+											<li><strong>4</strong>
 												<h5>Temperature</h5>
 												<p id="question_4"></p>
 											</li>
@@ -252,11 +253,61 @@
 							<!-- /middle-wizard -->
 							<div id="bottom-wizard">
 								<button type="button" name="backward" class="backward">Prev</button>
-								<button type="button" name="forward" class="forward">Next</button>
+								<button type="button" id="next_button" name="forward" class="forward">Next</button>
 								<button type="submit" name="process" class="submit">Submit</button>
 							</div>
 							<!-- /bottom-wizard -->
 						</form>
+					</div>
+					<!-- /Wizard container -->
+			</div>
+			<!-- /content-left -->
+			<div class="col-lg-6 content-right" id="start_logged">
+				<div id="wizard_container">
+					<div id="top-wizard">
+						</div>
+						<!-- /top-wizard -->
+						<form id="wrapped" method="POST">
+							<input id="website" name="website" type="text" value="">
+							<!-- Leave for security protection, read docs for details -->
+							<div id="middle-wizard">
+								<div class="step">
+									<h3 class="main_question"><strong>Employee login</strong>Please enter your credentials below</h3>
+									<div class="form-group">
+										<input type="text" name="email" id="create_emailField" class="form-control required" placeholder="Email Address">
+									</div>
+									<div class="form-group">
+										<input type="text" name="nameField" id="nameField" class="form-control required" placeholder="Name">
+									</div>
+									<div class="form-group">
+										<input type="text" name="mobileField" id="mobileField" class="form-control required" placeholder="Mobile">
+									</div>
+									<div class="form-group">
+										<input type="password" name="passwordField" id="passwordField" class="form-control required" placeholder="Password">
+									</div>
+									<div class="form-group">
+										<input type="password" name="confirmPasswordField" id="confirmPasswordField" class="form-control required" placeholder="Confirm Password">
+									</div>
+									<div class="form-group">
+										<input type="text" name="accessCodeField" id="accessCodeField" class="form-control required" placeholder="Access Code">
+									</div>
+									<div class="form-group terms">
+										<label class="container_check">Remember me
+											<input type="checkbox" name="remember" value="Yes" class="required">
+											<span class="checkmark"></span>
+										</label>
+									</div>
+								</div>
+								<!-- /step-->
+								<div id="bottom-wizard">
+								<button type="button" name="signin_button" id="signin_button" class="signin_button">Sign In</button>
+								<button type="button" name="signout_button" id="signout_button" class="signin_button hide">Logout</button>
+							</div>
+							</div>
+							<!-- /middle-wizard -->
+							<!-- /bottom-wizard -->
+						</form>
+						
 					</div>
 					<!-- /Wizard container -->
 			</div>
@@ -303,13 +354,15 @@
 	<!-- /.modal -->
 	
 	<!-- COMMON SCRIPTS -->
-	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/common_scripts.min.js"></script>
 	<script src="js/velocity.min.js"></script>
 	<script src="js/functions.js"></script>
 
 	<!-- Wizard script -->
 	<script src="js/survey_func.js"></script>
+
+	<script src="js/app.js"></script>
 
 </body>
 </html>

@@ -10,6 +10,18 @@
 			'overflow': 'visible'
 		});
 	})
+
+	function startLoading() {
+		$("#loader_form").fadeIn();
+	};
+
+	function stopLoading() {
+		$('[data-loader="circle-side"]').fadeOut(); // will first fade out the loading animation
+		$('#preloader').delay(350).fadeOut('slow'); // will fade out the white DIV that covers the website.
+		$('body').delay(350).css({
+			'overflow': 'visible'
+		});
+	};
 	
 	// Submit loader mask 
 	$('form#wrapped').on('submit', function () {
@@ -62,7 +74,7 @@
 
 	//inizialize navigation and content layers
 	layerInit();
-	$(window).on('resize', function(){
+	$(window).on('resize', function() {
 		window.requestAnimationFrame(layerInit);
 	});
 

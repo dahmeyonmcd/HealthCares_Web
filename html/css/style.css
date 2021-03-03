@@ -550,6 +550,25 @@ h3.main_question {
   font-size: 18px;
   font-size: 1.125rem;
 }
+
+h4.main_question {
+  color: #fff;
+  margin: 0 0 20px 0;
+  padding: 0;
+  font-weight: 500;
+  font-size: 18px;
+  font-size: 0.9rem;
+}
+
+h4.main_question strong {
+  color: #fff;
+  margin: 0 0 20px 0;
+  padding: 0;
+  font-weight: 600;
+  font-size: 18px;
+  font-size: 0.9rem;
+}
+
 h3.main_question strong {
   display: block;
   color: #999;
@@ -557,6 +576,25 @@ h3.main_question strong {
 }
 
 /* Wizard Buttons*/
+button.signin_button {
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  display: inline-block;
+  background: linear-gradient(to right, #DEA3FF, #7570FF);
+  font-size: 14px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+  line-height: 1;
+  padding: 12px 30px;
+}
+
 button.backward,
 button.forward,
 button.submit {
@@ -604,6 +642,7 @@ button.submit:before {
 }
 
 .backward:hover,
+.signin_button:hover,
 .forward:hover {
   opacity: 0.6;
   color: #fff;
@@ -947,6 +986,10 @@ iframe#map_iframe {
   background-color: white !important;
 }
 
+.box_style_2 .form-control-secure {
+  background-color: white !important;
+}
+
 .box_style_2 hr {
   margin: 10px -30px 20px -30px;
   border: 0;
@@ -1181,6 +1224,7 @@ span.error:after {
   font-size: 0.875rem;
   height: calc(2.55rem + 2px);
 }
+
 .form-control:focus {
   box-shadow: none;
   border-color: #434bdf;

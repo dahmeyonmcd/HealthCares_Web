@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="HealthCares, COVID-19 Questionnaire.">
+    <meta name="author" content="Dahmeyon McDonald">
+    <meta property="og:title" content="HealthCares | COVD-19 Questionnaire Results">
+    <meta property="og:image" content="https://ershealthcares.000webhostapp.com/img/ogimage.png">
+    <meta property="og:url" content="https://www.employrewards.com/healthcares">
+    <title>HealthCares | COVD-19 Questionnaire</title>
+
+    <!-- Favicons-->
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" type="image/x-icon" href="img/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="72x72" href="img/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/apple-touch-icon-144x144-precomposed.png">
+
+    <!-- GOOGLE WEB FONT -->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600" rel="stylesheet">
+
+    <!-- BASE CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/menu.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="css/vendors.css" rel="stylesheet">
+
+    <!-- YOUR CUSTOM CSS -->
+    <link href="css/custom.css" rel="stylesheet">
+	
+	<!-- MODERNIZR MENU -->
+	<script src="js/modernizr.js"></script>
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+
+</head>
+
+<body>
+	
+	<div id="preloader">
+		<div data-loader="circle-side"></div>
+	</div><!-- /Preload -->
+	
+	<div id="loader_form">
+		<div data-loader="circle-side-2"></div>
+	</div><!-- /loader_form -->
+	
+	<nav>
+		<ul class="cd-primary-nav">
+			<li><a href="index.html" class="animated_link">Home</a></li>
+			<li><a href="about.html" class="animated_link">About Us</a></li>
+			<li><a href="contacts.html" class="animated_link">Contact Us</a></li>
+		</ul>
+	</nav>
+	<!-- /menu -->
+	
+	<div class="container-fluid full-height" id="start_2">
+		<div class="row row-height">
+			<div class="col-lg-6 content-left" id="left_side">
+				<div class="content-left-wrapper">
+					<a href="index.html" id="logo"><img src="img/logo.png" alt="" width="139" height="27"></a>
+					<div id="social">
+						<ul>
+						</ul>
+					</div>
+					<!-- /social -->
+					<div>
+						<figure><img src="img/info_graphic_2.svg" alt="" class="img-fluid"></figure>
+						<h2>COVID-19 Questionnaire</h2>
+						<p>This COVID-19 Questionnaire needs to be completed daily for both employees and visitors of EmployReward Solutions and Synergi. Complete the questionnaire below.</p>
+					</div>
+					<div class="copy">© 2021 EmployReward Solutions</div>
+				</div>
+				<!-- /content-left-wrapper -->
+			</div>
+			<!-- /content-left -->
+			<div class="col-lg-6 content-right" id="result">
+				<div id="wizard_container">
+					<div id="top-wizard">
+						</div>
+						<!-- /top-wizard -->
+						<form id="wrapped" method="POST">
+							<input id="website" name="website" type="text" value="">
+							<!-- Leave for security protection, read docs for details -->
+							<div id="middle-wizard">
+								<div class="step">
+									<h3 class="main_question"><strong>Thank you</strong></h3>
+									<h3 id="main_header" class="main_question">You've successfully submitted the COVID-19 Questionnaire</h3>
+									<p class="main_paragraph" id="main_paragraph"></p></p>
+								</div>
+								<!-- /step-->
+								<div id="bottom-wizard">
+								<button type="button" name="close_button" id="close_button" class="signin_button">Close</button>
+							</div>
+							</div>
+							<!-- /middle-wizard -->
+							<!-- /bottom-wizard -->
+						</form>
+						
+					</div>
+					<!-- /Wizard container -->
+			</div>
+			<!-- /content-right-->
+		</div>
+		<!-- /row-->
+	</div>
+	<!-- /container-fluid -->
+
+	<div class="cd-overlay-nav">
+		<span></span>
+	</div>
+	<!-- /cd-overlay-nav -->
+
+	<div class="cd-overlay-content">
+		<span></span>
+	</div>
+	<!-- /cd-overlay-content -->
+	<!-- /.modal -->
+	
+	<!-- COMMON SCRIPTS -->
+	<script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/common_scripts.min.js"></script>
+	<script src="js/velocity.min.js"></script>
+	<script src="js/functions.js"></script>
+
+	<!-- Wizard script -->
+	<script src="js/survey_func.js"></script>
+
+	<script src="js/iframe.js"></script>
+
+	<script>
+		// var value1="value1";
+		// var value2="value2";
+
+		// var queryString = "?para1=" + value1 + "&para2=" + value2;
+		// window.location.href = "result.html" + queryString;
+	</script> 
+
+</body>
+</html>

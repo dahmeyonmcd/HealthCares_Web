@@ -1,7 +1,7 @@
 	/*  Wizard */
 	jQuery(function ($) {
 		"use strict";
-		$('form#wrapped').attr('action', 'survey.php');
+		$('form#wrapped').attr('action', 'result.html');
 		$("#wizard_container").wizard({
 			stepsWrapper: "#wrapped",
 			submit: ".submit",
@@ -23,6 +23,7 @@
 				}
 			}
 		});
+
 		//  progress bar
 		$("#progressbar").progressbar();
 		$("#wizard_container").wizard({
@@ -49,6 +50,8 @@
 		});
 	});
 
+	const submitButton = document.querySelector("#submitButton");
+
 	var config = {
     	apiKey: "AIzaSyCMMxr3GwNMDksb_BjIQR6pe0Z5bNRZ78g",
     	authDomain: "ersemployeeapp.firebaseapp.com",
@@ -61,8 +64,10 @@
   	};
 
   	// Initialize Firebase
-  	firebase.initializeApp(config);
-  	firebase.analytics();
+	if (firebase.apps.length === 0) {
+		firebase.initializeApp(config);
+  		//firebase.analytics();
+	};
 
 	const firestore = firebase.firestore();
 	const auth = firebase.auth();
@@ -88,24 +93,47 @@
 		["mobile", ""],
 	]);
 
+	if (submitButton != null) {
+		submitButton.addEventListener("click", function() {
+			if (userId != null) {
+				console.log("Navigating with user id: " + userId);
+				var queryString = "?userid1=" + userId;
+				window.location.href = "result.html" + queryString;
+			} else {
+				if (guestuserId != null) {
+					console.log("Navigating with guest user id: " + guestuserId);
+					var queryString = "?userid1=" + guestuserId;
+					window.location.href = "result.html" + queryString;
+				};
+			};
+			
+		});
+	};
+
 	function setVals(controlType, index, value) {
 		if (controlType == "question_1") {
 			if (q1[index] == "N") {
 				q1[index] = "Y";
 			} else {
-				q1[index] = "N";
+				if (q1[index] == "Y") {
+					q1[index] = "N";
+				};
 			};
 		} else if (controlType == "question_2") {
 			if (q2[index] == "N") {
 				q2[index] = "Y";
 			} else {
-				q2[index] = "N";
+				if (q2[index] == "Y") {
+					q2[index] = "N";
+				};
 			};
 		} else if (controlType == "question_3") {
 			if (q3[index] == "N") {
 				q3[index] = "Y";
 			} else {
-				q3[index] = "N";
+				if (q3[index] == "Y") {
+					q3[index] = "N";
+				};
 			};
 		} else if (controlType == "question_4") {
 			storeAllResponsesLocally(q1, q2, q3, q0, q4);
@@ -121,6 +149,8 @@
 
 	};
 
+	var theVariable = window.parent.q1
+
 	function storeAllResponsesLocally(array1, array2, array3, array4, temperature) {
 		var dataToPost = {
 			prompt1: array4,
@@ -130,8 +160,40 @@
 			question5: array4,
 			temperature: String(temperature),
 		};
+
 		storeResponsesGlobally(dataToPost);
+
 	};
+
+	function setCookie(name,value,exp_days) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exp_days*24*60*60*1000));
+		var expires = "expires=" + d.toGMTString();
+		document.cookie = name + "=" + value + ";" + expires + ";path=/";
+	};
+
+	function getCookie(name) {
+		var cname = name + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for(var i = 0; i < ca.length; i++){
+			var c = ca[i];
+			while(c.charAt(0) == ' '){
+				c = c.substring(1);
+			}
+			if(c.indexOf(cname) == 0){
+				return c.substring(cname.length, c.length);
+			}
+		}
+		return "";
+	};
+
+	function deleteCookie(name) {
+		var d = new Date();
+		d.setTime(d.getTime() - (60*60*1000));
+		var expires = "expires=" + d.toGMTString();
+		document.cookie = name + "=;" + expires + ";path=/";
+	}
 
 
 	function storeResponsesGlobally(dataToPost) {
@@ -140,6 +202,18 @@
 			d.setMinutes(0);
 			d.setSeconds(0);
 			d.setMilliseconds(0);
+
+			submitButton.style.display = "inline-block";
+
+			// deleteCookie("q1");
+			// deleteCookie("q2");
+			// deleteCookie("q3");
+			// deleteCookie("q4");
+
+			// setCookie("q1", String(q1.join(",")), 1);
+			// setCookie("q2", String(q2.join(",")), 1);
+			// setCookie("q3", String(q3.join(",")), 1);
+			// setCookie("q4", String(q4), 1);
 
 			var dateStr = Math.round(d.getTime()/1000);
 
@@ -160,31 +234,65 @@
 
 			} else {
 				// It's a guest filling it out
-				if (guestuserId != null) {
+				if (guestuserId == null) {
 
-					var userDataToPost = {
-						company: "",
-						name: String(String(userDict.get("firstname")) + " " + String(userDict.get("lastname"))),
-						email: String(userDict.get("email")),
-						mobile: String(userDict.get("mobile")),
-						id: String(userDict.get("id")),
-					}; 
+					console.log("Guest id is not stored: " + String(mainEmailField.value));
 
-					// Store in guest dictionary
-					firestore.collection("guests").doc(String(userDict.get("id"))).set(userDataToPost).then(() => {}).catch((error) => {
-						console.log("Failed to store guest user in firebase " + error);
-					});
-					// Initialize the collection with who last submitted
-				
-					firestore.collection("submissions").doc(String(dateStr)).set({
-						lastSubmitted: String(guestuserId)
-					}).then(() => {}).catch((error) => {
-						console.log("Failed to initialize collection")
-					});
+					firestore.collection("guests").where("email", "==", String(mainEmailField.value)).get().then((snapshot) => {
+						if (snapshot.empty) {
 
-					// Store the responses in the proper locations
-					firestore.collection("submissions").doc(String(dateStr)).collection("submissions").doc(String(userDict.get("id"))).set(dataToPost).then(() => {}).catch((error) => {
-						console.log("Error updating document: ", error);
+							console.log(snapshot);
+							snapshot.forEach((doc) => {
+								console.log(doc.data());
+							});
+							// Assign user a UUID because one isn't found
+							guestuserId = uuidv4();
+							userDict.set("id", guestuserId);
+							setCookie("guestUserId", String(guestuserId), 1)
+
+							console.log("Could not find user entity in guests");
+						} else {
+							//
+
+							const doc = snapshot.docs[0]
+
+							const id = doc.get("id");
+							guestuserId = String(id);
+							userDict.set("id", guestuserId);
+
+							setCookie("guestUserId", String(guestuserId), 1)
+
+							console.log("found: " + String(id));
+
+							var userDataToPost = {
+								company: "",
+								name: String(String(userDict.get("firstname")) + " " + String(userDict.get("lastname"))),
+								email: String(userDict.get("email")),
+								mobile: String(userDict.get("mobile")),
+								id: String(userDict.get("id")),
+							}; 
+		
+							// Store in guest dictionary
+							firestore.collection("guests").doc(String(userDict.get("id"))).set(userDataToPost).then(() => {}).catch((error) => {
+								console.log("Failed to store guest user in firebase " + error);
+							});
+							// Initialize the collection with who last submitted
+						
+							firestore.collection("submissions").doc(String(dateStr)).set({
+								lastSubmitted: String(guestuserId)
+							}).then(() => {}).catch((error) => {
+								console.log("Failed to initialize collection")
+							});
+		
+							// Store the responses in the proper locations
+							firestore.collection("submissions").doc(String(dateStr)).collection("submissions").doc(String(userDict.get("id"))).set(dataToPost).then(() => {}).catch((error) => {
+								console.log("Error updating document: ", error);
+							});
+
+							//
+						};
+					}).catch((error) => {
+
 					});
 				};
 			};
@@ -200,13 +308,19 @@
   		if(firebaseUser) {
 			guestuserId = null;
   			userId = String(firebaseUser.uid);;
+			userDict.set("id", userId);
+			setCookie("userId", String(userId), 1)
   		} else {
 			  // Create a user id here and store infomation as guest submissions
 			userId = null;
-			guestuserId = uuidv4();
-			userDict.set("id", guestuserId);
+			guestuserId = null;
+			// guestuserId = uuidv4();
+			// userDict.set("id", guestuserId);
   		};
   	});
+
+	// NEXT PAGE
+	
 
 
 // Summary 
@@ -293,6 +407,4 @@ function getVals(formControl, controlType, index) {
 			setVals(controlType, index, value);
 			break;
 	};
-
-	
 }

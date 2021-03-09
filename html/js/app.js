@@ -1,23 +1,25 @@
 //(function() {
 
-	// Initialize Firebase
-	// var config = {
- //    	apiKey: "AIzaSyCMMxr3GwNMDksb_BjIQR6pe0Z5bNRZ78g",
- //    	authDomain: "ersemployeeapp.firebaseapp.com",
- //    	databaseURL: "https://ersemployeeapp.firebaseio.com",
- //    	projectId: "ersemployeeapp",
- //    	storageBucket: "ersemployeeapp.appspot.com",
- //    	messagingSenderId: "495897751515",
- //    	appId: "1:495897751515:web:8306e0d539f83deae941fe",
- //    	measurementId: "G-K6YYGE21S6"
- //  	};
+	//Initialize Firebase
+	var config = {
+    	apiKey: "AIzaSyCMMxr3GwNMDksb_BjIQR6pe0Z5bNRZ78g",
+    	authDomain: "ersemployeeapp.firebaseapp.com",
+    	databaseURL: "https://ersemployeeapp.firebaseio.com",
+    	projectId: "ersemployeeapp",
+    	storageBucket: "ersemployeeapp.appspot.com",
+    	messagingSenderId: "495897751515",
+    	appId: "1:495897751515:web:8306e0d539f83deae941fe",
+    	measurementId: "G-K6YYGE21S6"
+  	};
 
- //  	// Initialize Firebase
- //  	firebase.initializeApp(config);
- //  	firebase.analytics();
+  	// Initialize Firebase
+	if (firebase.apps.length === 0) {
+		firebase.initializeApp(config);
+  		//firebase.analytics();
+	};
 
- 	// const firestore = firebase.firestore();
-  	// const auth = firebase.auth();
+ 	const firestore2 = firebase.firestore();
+  	const auth2 = firebase.auth();
 
   	var already = false;
   	var creating = false;
@@ -45,7 +47,7 @@
 	  const mainEmailField = document.getElementById("mainemailField");
 	  const firstNameField = document.getElementById("firstnameField");
 	  const lastNameField = document.getElementById("lastnameField");
-	  //const countryNameField = document.querySelector("#firstnameField");
+	  const mobileNameField = document.getElementById("mainmobileField");
 
   	// LOGIN PAGE REFERENCES
   	const emailTextField = document.querySelector("#create_emailField");
@@ -57,6 +59,8 @@
   	const confirmPasswordTextField = document.querySelector("#confirmPasswordField");
   	const nameTextField = document.querySelector("#nameField");
   	const accessCodeTextField = document.querySelector("#accessCodeField");
+
+	document.querySelector("#submitButton").style.display = "none";
 
   	already = false;
 
@@ -91,7 +95,7 @@
 		});
 	};
 
-  	auth.onAuthStateChanged(firebaseUser => {
+	auth2.onAuthStateChanged(firebaseUser => {
   		if(firebaseUser) {
   			if (created == true) {
   				storeUserInfo(String(firebaseUser.uid));
@@ -107,17 +111,19 @@
   			normalWizard.style.display = "flex";
   			loginWizard.style.display = "none";
 
-  			firestore.collection("members").doc(firebaseUser.uid).get().then((doc) => {
+  			firestore2.collection("members").doc(firebaseUser.uid).get().then((doc) => {
   				console.log(doc);
   				if(doc.exists) {
   					const name = doc.get("name");
-					  const emailStr = doc.get("email");
-  					console.log(name);
+					const emailStr = doc.get("email");
+					const mobileStr = doc.get("mobile");
+
   					userHeader.style.display = "block";
   					userHeader.innerHTML = String(("Welcome back, ") + "<b>" + name + "</b>");
 					  mainEmailField.value = String(emailStr);
 					  firstNameField.value = String(name).split(" ")[0];
 					  lastNameField.value = String(name).split(" ")[1];
+					  mobileNameField.value = String(mobileStr);
 
 					  mainEmailField.disabled = true;
 					  userSubHeader.innerHTML = String("Please verify your user information");
@@ -139,6 +145,7 @@
 			mainEmailField.value = "";
 			firstNameField.value = "";
 			lastNameField.value = "";
+			mobileNameField.value = "";
 			mainEmailField.disabled = false;
 
 			userSubHeader.innerHTML = String("Please fill with your details");
@@ -179,7 +186,7 @@
     			password: String(btoa(confirmPassword))
 			};
 
-  			firestore.collection("members").doc(String(userId)).set(docData).then(() => {
+  			firestore2.collection("members").doc(String(userId)).set(docData).then(() => {
   				console.log("Document successfully updated");
   				stopLoading();
   			}).catch((error) => {
@@ -197,7 +204,7 @@
   		if (already == true) {
   			// User already has an account
   			startLoading();
-  			const promise = auth.signInWithEmailAndPassword(email, password);
+  			const promise = auth2.signInWithEmailAndPassword(email, password);
   			created = false
   			promise.catch(e => {
   				console.log(e.message)
@@ -258,7 +265,7 @@
   		console.log(String(access_code));
   		const password = passwordTextField.value;
 
-  		firestore.collection("access_codes").doc(String(access_code)).get().then((doc) => {
+  		firestore2.collection("access_codes").doc(String(access_code)).get().then((doc) => {
   			if (doc.exists) {
   				const data = doc.data();
   				console.log("The email you are looking for is " + doc.get("email"));
@@ -269,7 +276,7 @@
   				if (String(userEmail) == String(iemail)) {
   					selectedcompany = String(cmpy)
   					console.log("Creating account...");
-  					const promise = auth.createUserWithEmailAndPassword(String(iemail), String(password));
+  					const promise = auth2.createUserWithEmailAndPassword(String(iemail), String(password));
   					created = true;
   					promise.catch(e => {
   						stopLoading();

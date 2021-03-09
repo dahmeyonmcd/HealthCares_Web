@@ -108,21 +108,10 @@
 										<input type="text" name="lastname" id="lastnameField" class="form-control required" placeholder="Last Name" onkeyup="getVals(this, 'lastname', 0);">
 									</div>
 									<div class="form-group">
-										<input type="email" name="email" id="mainemailField" class="form-control required" placeholder="Your Email" onkeyup="getVals(this, 'email', 0);">
+										<input type="text" name="email" id="mainemailField" class="form-control required" placeholder="Your Email" onkeyup="getVals(this, 'email', 0);">
 									</div>
 									<div class="form-group">
-										<input type="mobile" name="mobile" id="mainmobileField" class="form-control required" placeholder="Mobile" onkeyup="getVals(this, 'mobile', 0);">
-									</div>
-									<div class="form-group">
-										<div class="styled-select clearfix">
-											<select class="wide required" name="country">
-												<option value="">Your Country</option>
-												<option value="Unites States of America">United States of America</option>
-												<option value="Europe">Europe</option>
-												<option value="Asia">Asia</option>
-												<option value="United Kingdon">United Kingdom</option>
-											</select>
-										</div>
+										<input type="text" name="mobile" id="mainmobileField" class="form-control required" placeholder="Mobile" onkeyup="getVals(this, 'mobile', 0);">
 									</div>
 									<!-- /row -->
 									<div class="form-group terms">
@@ -144,6 +133,12 @@
 									<div class="form-group">
 										<label class="container_check version_2">Fever
 											<input type="checkbox" name="question_1[]" value="Fever" class="required" onchange="getVals(this, 'question_1', 1);">
+											<span class="checkmark"></span>
+										</label>
+									</div>
+									<div class="form-group">
+										<label class="container_check version_2">None
+											<input type="checkbox" name="question_1[]" value="None" class="required" onchange="getVals(this, 'question_1', 2);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
@@ -193,25 +188,37 @@
 											<span class="checkmark"></span>
 										</label>
 									</div>
+									<div class="form-group">
+										<label class="container_check version_2">None
+											<input type="checkbox" name="question_2[]" value="None" class="required" onchange="getVals(this, 'question_2', 7);">
+											<span class="checkmark"></span>
+										</label>
+									</div>
 								</div>
 								<!-- /step-->
 								<div class="step">
 									<h3 class="main_question"><strong>4/6</strong>In the last 14 days have you:</h3>
 									<div class="form-group">
-										<label class="container_radio version_2">Been in contact with someone who was diagnosed with COVID-19?
-											<input type="radio" name="question_3[]" value="Been in contact with someone who was diagnosed with COVID-19?" class="required" onchange="getVals(this, 'question_3', 0);">
+										<label class="container_check version_2">Been in contact with someone who was diagnosed with COVID-19?
+											<input type="checkbox" name="question_3[]" value="Been in contact with someone who was diagnosed with COVID-19?" class="required" onchange="getVals(this, 'question_3', 0);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
-										<label class="container_radio version_2">Been in close contact with someone who had COVID-19 symptoms?
+										<label class="container_check version_2">Been in close contact with someone who had COVID-19 symptoms?
 											<input type="checkbox" name="question_3[]" value="Been in close contact with someone who had COVID-19 symptoms?" class="required" onchange="getVals(this, 'question_3', 1);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
 									<div class="form-group">
-										<label class="container_radio version_2">Traveled internationally or taken a cruise
+										<label class="container_check version_2">Traveled internationally or taken a cruise
 											<input type="checkbox" name="question_3[]" value="Traveled internationally or taken a cruise" class="required" onchange="getVals(this, 'question_3', 2);">
+											<span class="checkmark"></span>
+										</label>
+									</div>
+									<div class="form-group">
+										<label class="container_check version_2">None
+											<input type="checkbox" name="question_3[]" value="None" class="required" onchange="getVals(this, 'question_3', 3);">
 											<span class="checkmark"></span>
 										</label>
 									</div>
@@ -254,7 +261,7 @@
 							<div id="bottom-wizard">
 								<button type="button" name="backward" class="backward">Prev</button>
 								<button type="button" id="next_button" name="forward" class="forward">Next</button>
-								<button type="submit" name="process" class="submit">Submit</button>
+								<button type="button" id="submitButton" name="process" class="submit">Submit</button>
 							</div>
 							<!-- /bottom-wizard -->
 						</form>
@@ -363,6 +370,7 @@
 	<script src="js/survey_func.js"></script>
 
 	<script src="js/app.js"></script>
+
 
 </body>
 </html>

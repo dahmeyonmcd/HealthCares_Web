@@ -29,7 +29,7 @@
     
 	<script type="text/javascript">
     function delayedRedirect(){
-        window.location = "index.html"
+        //window.location = "index.html"
     }
     </script>
 
@@ -37,29 +37,35 @@
 <body onLoad="setTimeout('delayedRedirect()', 8000)" style="background-color:#fff;">
 <?php
 						$mail = $_POST['email'];
-						$to = "info@domain.com";/* YOUR EMAIL HERE */
-						$subject = "Survey from Wilio";
-						$headers = "From: Survey from Wilio <noreply@yourdomain.com>";
+						$to = "healthcares@employreward.com";
+						$subject = "COVID-19 Questionnaire";
+						$headers = "From: HealthCares <noreply@employreward.com>";
 						$message = "DETAILS\n";
 						$message .= "\nFirst name: " . $_POST['firstname'];
 						$message .= "\nLast name: " . $_POST['lastname'];
 						$message .= "\nEmail: " . $_POST['email'];
-						$message .= "\nCountry: " . $_POST['country'];
-						$message .= "\nAge: " . $_POST['age'];
-						$message .= "\nGender: " . $_POST['gender'];
 						$message .= "\nTerms and conditions accepted: " . $_POST['terms']. "\n";
 	
-						$message .= "\nHow do rate your overall satisfaction about the service provided? " . $_POST['question_1']. "\n";
+						$message .= "\nHave you had any of the following symptoms in the past 24 hours?\n";
+						foreach($_POST['question_1'] as $value) 
+							{ 
+							$message .=   "- " .  trim(stripslashes($value)) . "\n"; 
+							};
 	
-						$message .= "\nHow did you hear about our company?\n" ;
+						$message .= "\nOr at least TWO of the following symptoms in the last 24 hours?\n" ;
 						foreach($_POST['question_2'] as $value) 
 							{ 
 							$message .=   "- " .  trim(stripslashes($value)) . "\n"; 
 							};
 	
-						$message .= "\nDo you think to suggest our company to a friend or parent? " . $_POST['question_3'];
-						if( isset( $_POST['additional_message'] ) && $_POST['additional_message']) {
-						$message .= "\nAdditional Message: " . $_POST['additional_message'];
+						$message .= "\nIn the last 14 days have you:\n";
+						foreach($_POST['question_3'] as $value) 
+							{ 
+							$message .=   "- " .  trim(stripslashes($value)) . "\n"; 
+							};
+
+						if( isset( $_POST['question_4'] ) && $_POST['question_4']) {
+						$message .= "\nTemperature: " . $_POST['question_4'];
 						}
 				
 						//Receive Variable
@@ -68,11 +74,25 @@
 						//Confirmation page
 						$user = "$mail";
 						$usersubject = "Thank You";
-						$userheaders = "From: info@Wilio.com\n";
+						$userheaders = "From: info@employreward.com\n";
 						/*$usermessage = "Thank you for your time. Your quotation request is successfully submitted.\n"; WITH OUT SUMMARY*/
 						//Confirmation page WITH  SUMMARY
-						$usermessage = "Thank you for your time. Your request is successfully submitted. We will reply shortly.\n\nBELOW A SUMMARY\n\n$message"; 
+						$usermessage = "Thank you for your time. Your COVID-19 questionnaire was successfully submitted"; 
 						mail($user,$usersubject,$usermessage,$userheaders);
+
+						$permission = "Unfortunately, you are NOT permitted to come into work"; 
+						
+						if($_POST['question_1'] || $_POST['question_2'] || $_POST['question_3'] == 0) {
+							$permission = "Unfortunately, you are NOT permitted to come into work";
+						}else{
+							$int = (int)$_POST['question_4'];
+							if($int >= 100.4) {
+								$permission = "Unfortunately, you are NOT permitted to come into work"; 
+							} else {
+								$permission = "You've successfully submitted your Employee and Visitor COVID-19 Self screening Questionnaire";
+							}
+						};
+						
 	
 ?>
 <!-- END SEND MAIL SCRIPT -->   
@@ -86,7 +106,7 @@
           </g>
          </svg>
      </div>
-	<h4><span>Request successfully sent!</span>Thank you for your time</h4>
+	<h4><span>Welcome</span>Thank you for your time</h4>
 	<small>You will be redirect back in 5 seconds.</small>
 </div>
 </body>

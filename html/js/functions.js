@@ -25,11 +25,11 @@
 	
 	// Submit loader mask 
 	$('form#wrapped').on('submit', function () {
-		var form = $("form#wrapped");
-		form.validate();
-		if (form.valid()) {
-			$("#loader_form").fadeIn();
-		}
+		// var form = $("form#wrapped");
+		// form.validate();
+		// if (form.valid()) {
+		// 	$("#loader_form").fadeIn();
+		// }
 	});
 
 	// Jquery select

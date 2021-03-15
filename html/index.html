@@ -228,7 +228,7 @@
 									<h3 class="main_question"><strong>5/6</strong>Enter your temperature below</h3>
 									<div class="form-group">
 										<label>Temperature</label>
-										<textarea name="question_4" id="temperatureTextArea" class="form-control" style="height:70;" placeholder="Type your temperature here (e.g. 98.8)" onkeyup="getVals(this, 'question_4', 0);"></textarea>
+										<textarea name="question_4" id="temperatureTextArea" class="form-control required" style="height:70;" placeholder="Type your temperature here (e.g. 98.8)" onkeyup="getVals(this, 'question_4', 0);"></textarea>
 									</div>
 								</div>
 								<!-- /step-->
@@ -279,7 +279,7 @@
 							<!-- Leave for security protection, read docs for details -->
 							<div id="middle-wizard">
 								<div class="step">
-									<h3 class="main_question"><strong>Employee login</strong>Please enter your credentials below</h3>
+									<h3 class="main_question"><strong>Employee portal</strong>Please enter your credentials below</h3>
 									<div class="form-group">
 										<input type="text" name="email" id="create_emailField" class="form-control required" placeholder="Email Address">
 									</div>
@@ -307,7 +307,7 @@
 								</div>
 								<!-- /step-->
 								<div id="bottom-wizard">
-								<button type="button" name="signin_button" id="signin_button" class="signin_button">Sign In</button>
+								<button type="button" name="forward" id="signin_button" class="forward">Sign In</button>
 								<button type="button" name="signout_button" id="signout_button" class="signin_button hide">Logout</button>
 							</div>
 							</div>
@@ -338,26 +338,6 @@
 	<!-- /menu button -->
 	
 	<!-- Modal terms -->
-	<div class="modal fade" id="terms-txt" tabindex="-1" role="dialog" aria-labelledby="termsLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title" id="termsLabel">Terms and conditions</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>Lorem ipsum dolor sit amet, in porro albucius qui, in <strong>nec quod novum accumsan</strong>, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
-					<p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus. Lorem ipsum dolor sit amet, <strong>in porro albucius qui</strong>, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
-					<p>Lorem ipsum dolor sit amet, in porro albucius qui, in nec quod novum accumsan, mei ludus tamquam dolores id. No sit debitis meliore postulant, per ex prompta alterum sanctus, pro ne quod dicunt sensibus.</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn_1" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
 	<!-- /.modal -->
 	
 	<!-- COMMON SCRIPTS -->

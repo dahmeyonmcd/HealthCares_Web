@@ -96,12 +96,12 @@
 	if (submitButton != null) {
 		submitButton.addEventListener("click", function() {
 			if (userId != null) {
-				console.log("Navigating with user id: " + userId);
+				// console.log("Navigating with user id: " + userId);
 				var queryString = "?userid1=" + userId;
 				window.location.href = "result.html" + queryString;
 			} else {
 				if (guestuserId != null) {
-					console.log("Navigating with guest user id: " + guestuserId);
+					// console.log("Navigating with guest user id: " + guestuserId);
 					var queryString = "?userid1=" + guestuserId;
 					window.location.href = "result.html" + queryString;
 				};
@@ -205,64 +205,53 @@
 
 			submitButton.style.display = "inline-block";
 
-			// deleteCookie("q1");
-			// deleteCookie("q2");
-			// deleteCookie("q3");
-			// deleteCookie("q4");
-
-			// setCookie("q1", String(q1.join(",")), 1);
-			// setCookie("q2", String(q2.join(",")), 1);
-			// setCookie("q3", String(q3.join(",")), 1);
-			// setCookie("q4", String(q4), 1);
-
 			var dateStr = Math.round(d.getTime()/1000);
 
 			if (userId != null) {
-				console.log(userId + "This is user id ");
+				// onsole.log(userId + "This is user id ");
 				// Initialize the collection with who last submitted
 
 				firestore.collection("submissions").doc(String(dateStr)).set({
 					lastSubmitted: String(userId)
 				}).then(() => {}).catch((error) => {
-					console.log("Failed to initialize collection")
+					// console.log("Failed to initialize collection")
 				});
 
 				// Store the responses in the proper locations
 				firestore.collection("submissions").doc(String(dateStr)).collection("submissions").doc(String(userId)).set(dataToPost).then(() => {}).catch((error) => {
-					console.log("Error updating document: ", error);
+					// console.log("Error updating document: ", error);
 				});
 
 			} else {
 				// It's a guest filling it out
 				if (guestuserId == null) {
 
-					console.log("Guest id is not stored: " + String(mainEmailField.value));
+					// console.log("Guest id is not stored: " + String(mainEmailField.value));
 
 					firestore.collection("guests").where("email", "==", String(mainEmailField.value)).get().then((snapshot) => {
 						if (snapshot.empty) {
 
-							console.log(snapshot);
-							snapshot.forEach((doc) => {
-								console.log(doc.data());
-							});
-							// Assign user a UUID because one isn't found
-							guestuserId = uuidv4();
-							userDict.set("id", guestuserId);
-							setCookie("guestUserId", String(guestuserId), 1)
+							// console.log("Could not find user entity in guests");
 
-							console.log("Could not find user entity in guests");
+							// Assign user a UUID because one isn't found
+							if (guestuserId != null) {
+								nextStoreProcedure(dataToPost, dateStr);
+							} else {
+								// console.log("Assigning new id to user");
+								guestuserId = String(uuidv4());
+								userDict.set("id", guestuserId);
+								// console.log("id assigned: " + guestuserId);
+								nextStoreProcedure(dataToPost, dateStr);
+							};
 						} else {
 							//
-
 							const doc = snapshot.docs[0]
 
 							const id = doc.get("id");
 							guestuserId = String(id);
 							userDict.set("id", guestuserId);
 
-							setCookie("guestUserId", String(guestuserId), 1)
-
-							console.log("found: " + String(id));
+							// console.log("found: " + String(id));
 
 							var userDataToPost = {
 								company: "",
@@ -274,19 +263,19 @@
 		
 							// Store in guest dictionary
 							firestore.collection("guests").doc(String(userDict.get("id"))).set(userDataToPost).then(() => {}).catch((error) => {
-								console.log("Failed to store guest user in firebase " + error);
+								// console.log("Failed to store guest user in firebase " + error);
 							});
 							// Initialize the collection with who last submitted
 						
 							firestore.collection("submissions").doc(String(dateStr)).set({
 								lastSubmitted: String(guestuserId)
 							}).then(() => {}).catch((error) => {
-								console.log("Failed to initialize collection")
+								// console.log("Failed to initialize collection")
 							});
 		
 							// Store the responses in the proper locations
 							firestore.collection("submissions").doc(String(dateStr)).collection("submissions").doc(String(userDict.get("id"))).set(dataToPost).then(() => {}).catch((error) => {
-								console.log("Error updating document: ", error);
+								// console.log("Error updating document: ", error);
 							});
 
 							//
@@ -294,8 +283,41 @@
 					}).catch((error) => {
 
 					});
+				} else {
+					// console.log("Guest now set, proceed to next step");
+					nextStoreProcedure(dataToPost, dateStr);
 				};
 			};
+	};
+
+	function nextStoreProcedure(dataToPost, dateStr) {
+		if (guestuserId != null) {
+
+			var userDataToPost = {
+				company: "",
+				name: String(String(userDict.get("firstname")) + " " + String(userDict.get("lastname"))),
+				email: String(userDict.get("email")),
+				mobile: String(userDict.get("mobile")),
+				id: String(userDict.get("id")),
+			}; 
+		
+			// Store in guest dictionary
+			firestore.collection("guests").doc(String(userDict.get("id"))).set(userDataToPost).then(() => {}).catch((error) => {
+				// console.log("Failed to store guest user in firebase " + error);
+			});
+			// Initialize the collection with who last submitted
+		
+			firestore.collection("submissions").doc(String(dateStr)).set({
+				lastSubmitted: String(guestuserId)
+			}).then(() => {}).catch((error) => {
+				// console.log("Failed to initialize collection")
+			});
+		
+			// Store the responses in the proper locations
+			firestore.collection("submissions").doc(String(dateStr)).collection("submissions").doc(String(userDict.get("id"))).set(dataToPost).then(() => {}).catch((error) => {
+				// console.log("Error updating document: ", error);
+			});
+		};
 	};
 
 	function uuidv4() {
@@ -309,13 +331,10 @@
 			guestuserId = null;
   			userId = String(firebaseUser.uid);;
 			userDict.set("id", userId);
-			setCookie("userId", String(userId), 1)
   		} else {
 			  // Create a user id here and store infomation as guest submissions
 			userId = null;
 			guestuserId = null;
-			// guestuserId = uuidv4();
-			// userDict.set("id", guestuserId);
   		};
   	});
 

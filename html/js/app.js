@@ -131,8 +131,6 @@
 					  
   					stopLoading();
   				};
-  			}).catch((error) => {
-  				console.log("Failed to fetch the user");
   			});
   		} else {
   			console.log("not logged in");
@@ -187,10 +185,10 @@
 			};
 
   			firestore2.collection("members").doc(String(userId)).set(docData).then(() => {
-  				console.log("Document successfully updated");
+  				// console.log("Document successfully updated");
   				stopLoading();
   			}).catch((error) => {
-  				console.log("Error updating document: ", error);
+				stopLoading();
   			});
   		} else {
 
@@ -207,13 +205,11 @@
   			const promise = auth2.signInWithEmailAndPassword(email, password);
   			created = false
   			promise.catch(e => {
-  				console.log(e.message)
   				stopLoading();
   			});
   		} else {
   			// User wants to sign up
   			auth.signOut();
-  			console.log(String(email));
   			checkForAccessCode(email, password);
   		};
   	};
@@ -238,44 +234,42 @@
   								checkForAccessCode2(email, accessCode);
 
   							} else {
-  								showAlert("failed", "Please make sure passwords match");
+								showAlert("failed", "Please fill out all fields");
   							};
   						} else {
-  							showAlert("failed", "Please enter all");
+							showAlert("failed", "Please fill out all fields");
   						};
   					} else {
-  						showAlert("failed", "Please enter all");
+						showAlert("failed", "Please fill out all fields");
   					};
   				} else {
-  					showAlert("failed", "Please enter all");
+  					showAlert("failed", "Please fill out all fields");
   				};
   			} else {
-  				;showAlert("failed", "Please enter all");
+				showAlert("failed", "Please fill out all fields");
   			}
   		} else {
-  			showAlert("failed", "Please enter all");
+			showAlert("failed", "Please fill out all fields");
   		};
   	};
 
   	function showAlert(title, message) {
-  		console.log(title + " " + message)
+  		alert(message);
   	};
 
   	function checkForAccessCode2(iemail, access_code) {
-  		console.log(String(access_code));
+  		// console.log(String(access_code));
   		const password = passwordTextField.value;
 
   		firestore2.collection("access_codes").doc(String(access_code)).get().then((doc) => {
   			if (doc.exists) {
   				const data = doc.data();
-  				console.log("The email you are looking for is " + doc.get("email"));
-
   				const userEmail = doc.get("email")
   				const cmpy = doc.get("company")
 
   				if (String(userEmail) == String(iemail)) {
   					selectedcompany = String(cmpy)
-  					console.log("Creating account...");
+  					// console.log("Creating account...");
   					const promise = auth2.createUserWithEmailAndPassword(String(iemail), String(password));
   					created = true;
   					promise.catch(e => {
@@ -283,16 +277,19 @@
   						created = false;
   					});
   				} else {
-					console.log("Not the proper email address");
+					// console.log("Not the proper email address");
 					stopLoading();
+					showAlert("Failed", "You've entered the incorrect email address");
   				};
   			}  else {
-  				console.log("Failed to find account");
+  				// console.log("Failed to find account");
   				stopLoading();
+				showAlert("Failed", "Access code does not exist");
   			};
   		}).catch((error) => {
-  			console.log("Error getting documents: ", error);
+  			// console.log("Error getting documents: ", error);
   			stopLoading();
+			  showAlert("Failed", "Access code does not exist");
   		});
   	};
 
